@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Variables de entorno / secretos
+.env
+
+# Bases de datos locales de prueba (si usas SQLite en algún test manual)
+*.db
+
+# Modelos y cachés descargados localmente (sentence-transformers, HuggingFace)
+.cache/
+models/
+
+# Docker
+*.env.local
