@@ -50,6 +50,17 @@ def remove_repeated_headers(pages_text: list[str], header_line_count: int) -> li
     return cleaned_pages_text
 
 def load_pdf(path: str, title: str, max_header_lines: int = 3, threshold: float = 0.8) -> LoadedDocument:
+    """Carga un PDF, detecta y elimina cabeceras de maquetación repetidas, y devuelve el texto completo limpio.
+
+    Limitación conocida: `header_line_count` se aplica uniformemente a todas
+    las páginas, incluida la portada. Si la portada no comparte la cabecera
+    repetida del resto del documento (caso típico), sus primeras líneas
+    reales pueden eliminarse igualmente si coinciden en posición con las
+    líneas de cabecera detectadas. Aceptado conscientemente: el título real
+    del documento se pasa por parámetro y no depende de este texto extraído.
+    """
+
+
     with pdfplumber.open(path) as pdf:
         pages_text = extract_pages_text(pdf)
         header_line_count = detect_header_line_count(pages_text, max_header_lines, threshold)
