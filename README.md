@@ -36,7 +36,7 @@ Documentación oficial y pública sobre el mercado eléctrico español:
 - [x] Configuración vía `pydantic-settings` (`.env`)
 - [x] Modelo de datos: `Document` y `Chunk` (con columna vectorial `embedding`)
 - [x] PostgreSQL + `pgvector` vía Docker Compose, tablas creadas y verificadas
-- [x] Ingesta: extracción de texto (PDF, con detección de cabecera/pie de página repetidos), chunking por tokens
+- [x] Ingesta: extracción de texto (PDF, con detección de cabecera/pie de página repetidos), chunking por tokens, embeddings (sentence-transformers), persistencia idempotente en PostgreSQL/pgvector
 - [ ] Retrieval: búsqueda semántica top-k
 - [ ] Generación: prompt aumentado + Ollama, respuesta con citas
 - [ ] API FastAPI
