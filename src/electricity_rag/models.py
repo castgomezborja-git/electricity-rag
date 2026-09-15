@@ -12,11 +12,12 @@ class Document(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(unique=True)
     source: Mapped[str]
+    content_hash: Mapped[str] = mapped_column(unique=True)
     ingested_at: Mapped[datetime]
     chunks: Mapped[list["Chunk"]] = relationship(back_populates="document", cascade="all, delete-orphan")
 
     def __repr__(self) -> str:
-        return f"Document(id={self.id!r}, title={self.title!r}, source={self.source!r}, ingested_at={self.ingested_at!r})"
+        return f"Document(id={self.id!r}, title={self.title!r}, source={self.source!r}, content_hash={self.content_hash!r}, ingested_at={self.ingested_at!r})"
 
 class Chunk(Base):
     __tablename__ = "chunks"
