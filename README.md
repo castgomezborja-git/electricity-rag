@@ -37,8 +37,8 @@ Documentación oficial y pública sobre el mercado eléctrico español:
 - [x] Modelo de datos: `Document` y `Chunk` (con columna vectorial `embedding`)
 - [x] PostgreSQL + `pgvector` vía Docker Compose, tablas creadas y verificadas
 - [x] Ingesta: extracción de texto (PDF, con detección de cabecera/pie de página repetidos), chunking por tokens, embeddings (sentence-transformers), persistencia idempotente en PostgreSQL/pgvector
-- [ ] Retrieval: búsqueda semántica top-k
-- [ ] Generación: prompt aumentado + Ollama, respuesta con citas
+- [x] Retrieval: búsqueda semántica top-k (distancia coseno con pgvector)
+- [x] Generación: prompt aumentado con citas + Ollama (llama3.1:8b), verificado con demo real de reducción de alucinación
 - [ ] API FastAPI
 - [ ] Autenticación JWT
 - [ ] Tests (unitarios + `testcontainers` para la capa de base de datos)
@@ -55,3 +55,11 @@ uv run python scripts/create_tables.py
 
 Requiere un `.env` local (no versionado) con `DATABASE_URL`, `POSTGRES_USER`,
 `POSTGRES_PASSWORD` y `POSTGRES_DB`.
+
+## Notas de instalación
+
+Si `ollama pull` falla con un error de certificado TLS contra el backend de
+Cloudflare R2 (bug conocido de Ollama, no depende de antivirus/VPN/router),
+la alternativa es descargar el GGUF manualmente desde HuggingFace y crear el
+modelo local con `ollama create llama3.1:8b -f Modelfile` (con una línea
+`FROM <ruta_al_gguf>` en el Modelfile).
