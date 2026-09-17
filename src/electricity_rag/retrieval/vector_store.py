@@ -7,6 +7,7 @@ from electricity_rag.ingestion.embeddings import embed_chunks
 @dataclass
 class SearchResult:
     document_title: str
+    document_source: str
     chunk_text: str
     distance: float
 
@@ -20,4 +21,4 @@ def search_similar_chunks(query: str, top_k: int = 5) -> list[SearchResult]:
             .limit(top_k)
             .all()
         )
-        return [SearchResult(document_title=chunk.document.title, chunk_text=chunk.content, distance=distance) for chunk, distance in results]
+        return [SearchResult(document_title=chunk.document.title, document_source=chunk.document.source, chunk_text=chunk.content, distance=distance) for chunk, distance in results]
