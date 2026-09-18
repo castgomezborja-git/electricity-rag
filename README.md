@@ -43,7 +43,7 @@ Documentación oficial y pública sobre el mercado eléctrico español:
 - [x] API FastAPI (`POST /ask`)
 - [x] Autenticación JWT (`POST /login`, bcrypt, token con expiración de 30min, endpoint `/ask` protegido)
 - [x] Tests unitarios (chunking, extracción/limpieza de PDF, hashing — 12 tests)
-- [ ] Tests de integración con `testcontainers` para la capa de persistencia/retrieval
+- [x] Tests de integración con `testcontainers` (distancia coseno, restricción UNIQUE, cascade delete — 3 tests)
 - [ ] Dockerización completa de la app (además de Postgres)
 - [ ] Despliegue
 
