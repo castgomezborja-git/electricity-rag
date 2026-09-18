@@ -76,5 +76,11 @@ modelo local con `ollama create llama3.1:8b -f Modelfile` (con una línea
 
 ## Notas de mejoras futuras
 
-- Endpoint `POST /register` (ahora mismo el único usuario se crea vía `scripts/create_user.py`)
+- Endpoint `POST /register` — decidido NO implementarlo en el alcance actual:
+  dejarlo abierto sin restricciones permitiría a cualquiera crear cuentas y
+  consumir el LLM/GPU local; hacerlo bien requeriría añadir un rol admin que
+  autorizara la creación de usuarios, una dimensión de autorización completa
+  sin otro caso de uso en el proyecto (mismo motivo YAGNI por el que `User`
+  no tiene campo `role`). El único usuario se sigue creando vía
+  `scripts/create_user.py`.
 - Formato de citas `[Fuente: ...]` no siempre presente en la respuesta del LLM (no determinismo del modelo) — se podría reforzar con `temperature` más baja o prompt más insistente
