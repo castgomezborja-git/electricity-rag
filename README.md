@@ -44,8 +44,8 @@ Documentación oficial y pública sobre el mercado eléctrico español:
 - [x] Autenticación JWT (`POST /login`, bcrypt, token con expiración de 30min, endpoint `/ask` protegido)
 - [x] Tests unitarios (chunking, extracción/limpieza de PDF, hashing — 12 tests)
 - [x] Tests de integración con `testcontainers` (distancia coseno, restricción UNIQUE, cascade delete — 3 tests)
-- [ ] Dockerización completa de la app (además de Postgres)
-- [ ] Despliegue
+- [x] Dockerización completa: API FastAPI + PostgreSQL/pgvector vía Docker Compose (Ollama sigue corriendo en el host, conectado vía `host.docker.internal`)
+- [x] Decisión de despliegue: NO desplegar en la nube (documentado, ver más abajo)
 
 ## Cómo levantar el entorno de desarrollo
 
@@ -84,3 +84,24 @@ modelo local con `ollama create llama3.1:8b -f Modelfile` (con una línea
   no tiene campo `role`). El único usuario se sigue creando vía
   `scripts/create_user.py`.
 - Formato de citas `[Fuente: ...]` no siempre presente en la respuesta del LLM (no determinismo del modelo) — se podría reforzar con `temperature` más baja o prompt más insistente
+
+
+## Decisión de despliegue
+
+Este proyecto no se despliega en un servicio en la nube (Render/Railway u
+otro), a diferencia de lo previsto originalmente en el README maestro.
+Motivo: la generación (`llama3.1:8b` vía Ollama) depende de la GPU local
+(RTX 2080), una decisión de diseño tomada para mantener el stack 100%
+gratuito. Una capa gratuita de hosting en la nube no ofrece GPU ni RAM
+suficiente para correr el modelo de forma viable, y no hay manera de que
+un servidor remoto alcance el Ollama que corre en esta máquina sin exponer
+un túnel hacia ella (rechazado por complejidad y superficie de seguridad
+innecesarias para un proyecto de portfolio).
+
+Desplegar solo la API + PostgreSQL sin el LLM dejaría inoperativo el
+endpoint central del proyecto (`/ask`), así que se descarta también esa
+opción parcial. La demo se ejecuta en local siguiendo los pasos de "Cómo
+levantar el entorno de desarrollo" — si en el futuro se valida interés real
+en este proyecto, la migración natural sería sustituir Ollama por una API
+de pago (OpenAI/Claude), tal como ya contemplaba el README maestro desde el
+principio, lo cual sí permitiría un despliegue completo en la nube.
