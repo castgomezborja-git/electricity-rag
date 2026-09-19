@@ -8,5 +8,7 @@ class Settings(BaseSettings):
 
     jwt_secret_key: str
 
+    ollama_host: str
+
 
 settings = Settings()
